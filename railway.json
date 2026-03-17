@@ -2,7 +2,8 @@
   "$schema": "https://railway.com/railway.schema.json",
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "cd backend && npm install && npx prisma generate"
+    "buildCommand": "cd backend && npm install && npx prisma generate",
+    "nixpacksConfigPath": "nixpacks.toml"
   },
   "deploy": {
     "startCommand": "cd backend && npm start",
