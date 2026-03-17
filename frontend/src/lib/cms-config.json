@@ -1,0 +1,129 @@
+{
+  "site": {
+    "name": "Lineage AI",
+    "tagline": "Genetic-Risk Cascade Screening Platform",
+    "description": "Lineage AI automates family outreach, maps hereditary risk across generations, and tracks cascade testing from one HIPAA-compliant dashboard. Built for genetic counselors.",
+    "url": "https://lineage.ai",
+    "twitterHandle": "@lineageai",
+    "ogImage": "/og-image.png"
+  },
+  "pages": {
+    "/": {
+      "title": "Lineage AI — Genetic Cascade Testing Platform for Counselors",
+      "description": "Stop losing at-risk relatives to coordination failures. Lineage AI automates cascade testing outreach, maps family trees, and tracks completion rates — all HIPAA-compliant.",
+      "keywords": ["genetic counseling software", "cascade testing", "hereditary cancer screening", "BRCA family testing", "genetic risk platform", "family cascade testing manager"]
+    },
+    "/dashboard": {
+      "title": "Dashboard — Lineage AI",
+      "description": "Your genetic counseling command center. Track cascade rates, manage outreach, and monitor at-risk relatives across all your patients.",
+      "keywords": ["genetic counseling dashboard", "cascade testing tracker"]
+    },
+    "/patients": {
+      "title": "Patients — Lineage AI",
+      "description": "Manage proband records and coordinate family cascade testing.",
+      "keywords": ["patient management", "genetic counseling", "proband tracking"]
+    }
+  },
+  "conditions": [
+    {
+      "slug": "brca1-brca2-hereditary-breast-ovarian-cancer",
+      "name": "BRCA1/2 — Hereditary Breast & Ovarian Cancer",
+      "shortName": "BRCA1/2",
+      "prevalence": "1 in 400 people carry a BRCA1 or BRCA2 variant",
+      "cascadeUrgency": "critical",
+      "description": "BRCA1 and BRCA2 are tumor suppressor genes. Pathogenic variants dramatically increase lifetime risk of breast cancer (up to 72%) and ovarian cancer (up to 44%). First-degree relatives have a 50% chance of carrying the same variant, making cascade testing essential.",
+      "seoDescription": "Manage BRCA1/2 cascade testing across your patient's family. Lineage AI automates outreach to at-risk first-degree relatives, tracks consent, and logs compliance — reducing the coordination burden that keeps cascade rates below 30%.",
+      "keywords": ["BRCA1 cascade testing", "BRCA2 family screening", "hereditary breast cancer testing", "BRCA family outreach"]
+    },
+    {
+      "slug": "lynch-syndrome-hereditary-colorectal-cancer",
+      "name": "Lynch Syndrome — Hereditary Colorectal Cancer",
+      "shortName": "Lynch Syndrome",
+      "prevalence": "1 in 279 people carry a Lynch Syndrome variant",
+      "cascadeUrgency": "critical",
+      "description": "Lynch Syndrome (HNPCC) is caused by pathogenic variants in mismatch repair genes (MLH1, MSH2, MSH6, PMS2). It confers up to 80% lifetime risk of colorectal cancer and elevated risk of endometrial, ovarian, and other cancers.",
+      "seoDescription": "Coordinate Lynch Syndrome cascade testing for your patients' families. Automate outreach across MLH1, MSH2, MSH6, and PMS2 variant families with Lineage AI's HIPAA-compliant platform.",
+      "keywords": ["Lynch syndrome cascade testing", "HNPCC family screening", "mismatch repair gene testing", "colorectal cancer hereditary"]
+    },
+    {
+      "slug": "familial-hypercholesterolemia",
+      "name": "Familial Hypercholesterolemia",
+      "shortName": "FH",
+      "prevalence": "1 in 250 people have FH",
+      "cascadeUrgency": "high",
+      "description": "Familial Hypercholesterolemia is a genetic disorder causing severely elevated LDL cholesterol from birth. Without treatment, it leads to premature cardiovascular disease. Cascade testing identifies at-risk relatives before a cardiac event occurs.",
+      "seoDescription": "Streamline Familial Hypercholesterolemia cascade testing. Identify at-risk relatives of FH probands before their first cardiac event. Lineage AI tracks family outreach and testing completion rates.",
+      "keywords": ["familial hypercholesterolemia cascade", "FH genetic testing", "cardiovascular genetics", "LDL genetic screening"]
+    },
+    {
+      "slug": "hereditary-diffuse-gastric-cancer",
+      "name": "Hereditary Diffuse Gastric Cancer (CDH1)",
+      "shortName": "HDGC / CDH1",
+      "prevalence": "Rare — ~1% of all gastric cancers",
+      "cascadeUrgency": "critical",
+      "description": "CDH1 pathogenic variants cause Hereditary Diffuse Gastric Cancer with up to 70% lifetime risk. Prophylactic gastrectomy is recommended for variant carriers. Cascade testing is time-critical given the severity of outcomes.",
+      "seoDescription": "Manage CDH1/HDGC cascade testing with urgency. Lineage AI helps genetic counselors rapidly identify and contact at-risk relatives of CDH1 variant carriers, where early detection is life-saving.",
+      "keywords": ["CDH1 cascade testing", "hereditary gastric cancer", "HDGC family screening", "prophylactic gastrectomy counseling"]
+    },
+    {
+      "slug": "li-fraumeni-syndrome",
+      "name": "Li-Fraumeni Syndrome (TP53)",
+      "shortName": "LFS / TP53",
+      "prevalence": "Rare — ~1 in 5,000–20,000",
+      "cascadeUrgency": "critical",
+      "description": "Li-Fraumeni Syndrome is caused by germline TP53 variants and confers near-universal lifetime cancer risk across multiple tumor types. Intensive surveillance protocols require all at-risk family members to be identified and enrolled.",
+      "seoDescription": "Coordinate TP53/Li-Fraumeni Syndrome cascade testing across multi-generation families. Lineage AI tracks outreach, consent, and surveillance enrollment for all at-risk relatives.",
+      "keywords": ["Li-Fraumeni cascade testing", "TP53 family screening", "LFS genetic counseling", "TP53 hereditary cancer"]
+    },
+    {
+      "slug": "hypertrophic-cardiomyopathy",
+      "name": "Hypertrophic Cardiomyopathy (HCM)",
+      "shortName": "HCM",
+      "prevalence": "1 in 500 people",
+      "cascadeUrgency": "high",
+      "description": "Hypertrophic Cardiomyopathy is the most common inherited heart condition. It is a leading cause of sudden cardiac death in young athletes. First-degree relatives have a 50% chance of inheriting the causative variant.",
+      "seoDescription": "Manage HCM cascade testing for your cardiology genetics patients. Lineage AI coordinates outreach to at-risk first-degree relatives and tracks echocardiographic screening completion.",
+      "keywords": ["hypertrophic cardiomyopathy cascade testing", "HCM family screening", "cardiovascular genetics platform", "sudden cardiac death prevention"]
+    },
+    {
+      "slug": "long-qt-syndrome",
+      "name": "Long QT Syndrome",
+      "shortName": "LQTS",
+      "prevalence": "1 in 2,000 people",
+      "cascadeUrgency": "high",
+      "description": "Long QT Syndrome causes abnormal heart rhythms that can lead to sudden cardiac death, particularly in young people. Genetic cascade testing identifies at-risk relatives who can be treated prophylactically.",
+      "seoDescription": "Coordinate Long QT Syndrome cascade testing. Lineage AI helps cardiac genetics counselors identify and contact at-risk relatives of LQTS probands, preventing sudden cardiac death through early intervention.",
+      "keywords": ["Long QT syndrome cascade testing", "LQTS family screening", "cardiac genetics platform", "arrhythmia genetic testing"]
+    },
+    {
+      "slug": "marfan-syndrome",
+      "name": "Marfan Syndrome (FBN1)",
+      "shortName": "Marfan / FBN1",
+      "prevalence": "1 in 5,000 people",
+      "cascadeUrgency": "high",
+      "description": "Marfan Syndrome is caused by FBN1 variants and affects connective tissue throughout the body, with life-threatening aortic complications. Cascade testing enables prophylactic monitoring and intervention in at-risk relatives.",
+      "seoDescription": "Manage Marfan Syndrome cascade testing for FBN1 variant families. Track aortic surveillance enrollment across at-risk relatives with Lineage AI's family testing coordination platform.",
+      "keywords": ["Marfan syndrome cascade testing", "FBN1 family screening", "aortic aneurysm genetic testing", "connective tissue disorder genetics"]
+    },
+    {
+      "slug": "hereditary-paraganglioma-pheochromocytoma",
+      "name": "Hereditary Paraganglioma-Pheochromocytoma",
+      "shortName": "HPGL/PCC",
+      "prevalence": "Rare — ~1–5% of pheochromocytoma cases are hereditary",
+      "cascadeUrgency": "high",
+      "description": "Caused by variants in SDHB, SDHC, SDHD, and other SDH genes. Hereditary paraganglioma-pheochromocytoma syndromes require lifelong surveillance. Cascade testing identifies at-risk relatives who need biochemical and imaging surveillance.",
+      "seoDescription": "Coordinate SDH gene cascade testing for hereditary paraganglioma-pheochromocytoma families. Lineage AI tracks outreach and surveillance enrollment for SDHB, SDHC, and SDHD variant carriers.",
+      "keywords": ["paraganglioma cascade testing", "pheochromocytoma genetic testing", "SDH gene family screening", "hereditary neuroendocrine tumor genetics"]
+    },
+    {
+      "slug": "von-hippel-lindau-disease",
+      "name": "Von Hippel-Lindau Disease (VHL)",
+      "shortName": "VHL",
+      "prevalence": "1 in 36,000 people",
+      "cascadeUrgency": "high",
+      "description": "VHL disease is caused by pathogenic VHL variants and predisposes to hemangioblastomas, clear cell renal cell carcinoma, and pheochromocytomas. Cascade testing enables surveillance enrollment in at-risk relatives before tumor development.",
+      "seoDescription": "Manage VHL disease cascade testing across multi-generation families. Lineage AI automates outreach to at-risk relatives and tracks enrollment in VHL surveillance programs.",
+      "keywords": ["Von Hippel-Lindau cascade testing", "VHL family screening", "renal cell carcinoma genetic testing", "VHL surveillance enrollment"]
+    }
+  ]
+}

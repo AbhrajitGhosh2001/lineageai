@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String?
+  googleId     String?    @unique
+  name         String
+  role         String     @default("counselor")
+  clinicId     String?
+  clinic       Clinic?    @relation(fields: [clinicId], references: [id])
+  patients     Patient[]
+  auditLogs    AuditLog[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Clinic {
+  id        String    @id @default(cuid())
+  name      String
+  plan      String    @default("pilot")
+  users     User[]
+  patients  Patient[]
+  createdAt DateTime  @default(now())
+}
+
+model Patient {
+  id              String         @id @default(cuid())
+  // PII fields stored encrypted (AES-256-GCM)
+  firstNameEnc    String
+  lastNameEnc     String
+  dateOfBirth     String?
+  emailEnc        String?
+  phoneEnc        String?
+  condition       String
+  testResult      String?
+  testDate        String?
+  notes           String?
+  counselorId     String
+  counselor       User           @relation(fields: [counselorId], references: [id])
+  clinicId        String?
+  clinic          Clinic?        @relation(fields: [clinicId], references: [id])
+  familyMembers   FamilyMember[]
+  auditLogs       AuditLog[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model FamilyMember {
+  id           String     @id @default(cuid())
+  patientId    String
+  patient      Patient    @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  firstNameEnc String
+  lastNameEnc  String
+  relationship String
+  emailEnc     String?
+  phoneEnc     String?
+  dateOfBirth  String?
+  riskLevel    String     @default("at-risk")
+  testStatus   String     @default("not-contacted")
+  testResult   String?
+  testDate     String?
+  outreaches   Outreach[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Outreach {
+  id             String       @id @default(cuid())
+  familyMemberId String
+  familyMember   FamilyMember @relation(fields: [familyMemberId], references: [id], onDelete: Cascade)
+  method         String
+  status         String       @default("pending")
+  sentAt         DateTime?
+  respondedAt    DateTime?
+  message        String?
+  jobId          String?
+  createdAt      DateTime     @default(now())
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  patientId  String?
+  patient    Patient? @relation(fields: [patientId], references: [id])
+  action     String   // CREATE | READ | UPDATE | DELETE
+  resource   String   // Patient | FamilyMember | Outreach
+  resourceId String
+  metadata   Json?
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+}

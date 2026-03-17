@@ -1,0 +1,28 @@
+node_modules/
+*.deb
+*.db
+.env
+.env.local
+.env.*.local
+sendgrid.env
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Prisma
+backend/prisma/migrations/**/migration_lock.toml
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

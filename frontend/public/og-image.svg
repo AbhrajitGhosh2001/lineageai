@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#312e81"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="80" y="80" width="72" height="72" rx="18" fill="#4f46e5"/>
+  <path d="M100 96 C100 106 110 111 110 120 C110 129 100 134 100 144" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <path d="M132 96 C132 106 122 111 122 120 C122 129 132 134 132 144" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <line x1="100" y1="102" x2="132" y2="102" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="104" y1="111" x2="128" y2="111" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="110" y1="120" x2="122" y2="120" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="104" y1="129" x2="128" y2="129" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="100" y1="138" x2="132" y2="138" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="172" y="124" font-family="system-ui" font-size="42" font-weight="700" fill="white">Lineage AI</text>
+  <rect x="80" y="200" width="360" height="38" rx="19" fill="#4f46e5"/>
+  <text x="100" y="224" font-family="system-ui" font-size="16" fill="#a5b4fc">HIPAA-Compliant Genetic Counseling Platform</text>
+  <text x="80" y="310" font-family="system-ui" font-size="56" font-weight="800" fill="white">Cascade testing stuck</text>
+  <text x="80" y="378" font-family="system-ui" font-size="56" font-weight="800" fill="white">at 30%? Fix the</text>
+  <text x="80" y="446" font-family="system-ui" font-size="56" font-weight="800" fill="white">coordination.</text>
+  <text x="80" y="516" font-family="system-ui" font-size="21" fill="#a5b4fc">Automate outreach. Map hereditary risk. Track every relative.</text>
+  <rect x="800" y="80" width="320" height="470" rx="24" fill="white" fill-opacity="0.05"/>
+  <text x="960" y="175" font-family="system-ui" font-size="52" font-weight="800" fill="white" text-anchor="middle">30%</text>
+  <text x="960" y="205" font-family="system-ui" font-size="15" fill="#a5b4fc" text-anchor="middle">Industry cascade rate</text>
+  <text x="960" y="295" font-family="system-ui" font-size="52" font-weight="800" fill="white" text-anchor="middle">5,500+</text>
+  <text x="960" y="325" font-family="system-ui" font-size="15" fill="#a5b4fc" text-anchor="middle">US genetic counselors</text>
+  <text x="960" y="415" font-family="system-ui" font-size="52" font-weight="800" fill="white" text-anchor="middle">$58.71B</text>
+  <text x="960" y="445" font-family="system-ui" font-size="15" fill="#a5b4fc" text-anchor="middle">Market by 2033</text>
+  <text x="960" y="510" font-family="system-ui" font-size="30" font-weight="700" fill="#818cf8" text-anchor="middle">lineage.ai</text>
+</svg>
