@@ -13,6 +13,10 @@ const { PrismaClient } = require('@prisma/client');
  */
 const connectionString = process.env.DATABASE_URL;
 
+if (!connectionString) {
+  throw new Error('DATABASE_URL environment variable is not set');
+}
+
 let prisma;
 
 if (global.__prisma) {
@@ -21,7 +25,6 @@ if (global.__prisma) {
   const adapter = new PrismaPg({ connectionString });
   prisma = new PrismaClient({ adapter });
 
-  // Prevent multiple instances in dev (hot reload)
   if (process.env.NODE_ENV !== 'production') {
     global.__prisma = prisma;
   }
