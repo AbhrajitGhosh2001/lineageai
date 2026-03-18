@@ -1,3 +1,9 @@
 [phases.setup]
 nixpkgsArchive = "50a648d88844b1e3a302d2b5d70cf54a25b47253"
 nixPkgs = ["nodejs_24"]
+
+[phases.install]
+cmds = []
+
+[phases.build]
+cmds = ["cd backend && npm install && npx prisma generate"]

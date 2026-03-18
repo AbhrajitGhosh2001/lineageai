@@ -1,5 +1,5 @@
 {
-  "devDependencies": {
-    "sharp": "^0.34.5"
-  }
+  "name": "lineageai",
+  "version": "1.0.0",
+  "private": true
 }
