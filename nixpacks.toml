@@ -1,2 +1,3 @@
 [phases.setup]
-nixPkgs = ["nodejs_22"]
+nixPkgsArchive = "50a648d88844b1e3a302d2b5d70cf54a25b47253"
+nixPkgs = ["nodejs_24"]
