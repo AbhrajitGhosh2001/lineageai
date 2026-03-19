@@ -36,7 +36,11 @@ app.get('/api/health', (req, res) => res.json({
   timestamp: new Date().toISOString(),
 }));
 
-app.listen(PORT, () => {
-  console.log(`Lineage AI backend running on http://localhost:${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV}`);
+console.log(`[startup] PORT env = ${process.env.PORT}`);
+console.log(`[startup] Binding to port ${PORT}`);
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`[startup] Lineage AI backend listening on 0.0.0.0:${PORT}`);
+  console.log(`[startup] NODE_ENV = ${process.env.NODE_ENV}`);
+  console.log(`[startup] DATABASE_URL set = ${!!process.env.DATABASE_URL}`);
 });
