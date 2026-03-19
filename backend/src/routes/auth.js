@@ -8,45 +8,50 @@ const { authenticate } = require('../middleware/auth');
 
 const router = express.Router();
 
-// ── Google OAuth Strategy ────────────────────────────────────────────────────
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        const email = profile.emails?.[0]?.value;
-        if (!email) return done(new Error('No email from Google'), null);
+// ── Google OAuth Strategy (lazy — only registered when env vars are present) ──
+function registerGoogleStrategy() {
+  if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) return;
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL,
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          const email = profile.emails?.[0]?.value;
+          if (!email) return done(new Error('No email from Google'), null);
 
-        let user = await prisma.user.findFirst({
-          where: { OR: [{ googleId: profile.id }, { email }] },
-        });
+          let user = await prisma.user.findFirst({
+            where: { OR: [{ googleId: profile.id }, { email }] },
+          });
 
-        if (!user) {
-          user = await prisma.user.create({
-            data: {
-              email,
-              name: profile.displayName || email.split('@')[0],
-              googleId: profile.id,
-            },
-          });
-        } else if (!user.googleId) {
-          user = await prisma.user.update({
-            where: { id: user.id },
-            data: { googleId: profile.id },
-          });
+          if (!user) {
+            user = await prisma.user.create({
+              data: {
+                email,
+                name: profile.displayName || email.split('@')[0],
+                googleId: profile.id,
+              },
+            });
+          } else if (!user.googleId) {
+            user = await prisma.user.update({
+              where: { id: user.id },
+              data: { googleId: profile.id },
+            });
+          }
+
+          return done(null, user);
+        } catch (err) {
+          return done(err, null);
         }
-
-        return done(null, user);
-      } catch (err) {
-        return done(err, null);
       }
-    }
-  )
-);
+    )
+  );
+}
+
+registerGoogleStrategy();
 
 function issueToken(user) {
   return jwt.sign(
@@ -57,17 +62,21 @@ function issueToken(user) {
 }
 
 // ── Google OAuth endpoints ───────────────────────────────────────────────────
-router.get(
-  '/google',
+function requireGoogleOAuth(req, res, next) {
+  if (!process.env.GOOGLE_CLIENT_ID) {
+    return res.status(503).json({ error: 'Google OAuth is not configured on this server' });
+  }
+  next();
+}
+
+router.get('/google', requireGoogleOAuth,
   passport.authenticate('google', { scope: ['profile', 'email'], session: false })
 );
 
-router.get(
-  '/google/callback',
+router.get('/google/callback', requireGoogleOAuth,
   passport.authenticate('google', { session: false, failureRedirect: `${process.env.FRONTEND_URL}/login?error=oauth` }),
   (req, res) => {
     const token = issueToken(req.user);
-    // Redirect to frontend with token in URL fragment (SPA picks it up)
     res.redirect(`${process.env.FRONTEND_URL}/auth/callback#token=${token}`);
   }
 );
