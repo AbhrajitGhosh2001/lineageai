@@ -2,3 +2,4 @@ node_modules
 dev.db
 *.deb
 .env
+.env.*
