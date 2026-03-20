@@ -8,6 +8,7 @@ const patientRoutes = require('./routes/patients');
 const familyMemberRoutes = require('./routes/familyMembers');
 const outreachRoutes = require('./routes/outreach');
 const statsRoutes = require('./routes/stats');
+const portalRoutes = require('./routes/portal');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -40,6 +41,7 @@ app.use('/api/patients', patientRoutes);
 app.use('/api/patients/:patientId/family', familyMemberRoutes);
 app.use('/api/family/:memberId/outreach', outreachRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api', portalRoutes);
 
 app.get('/api/health', (req, res) => res.json({
   status: 'ok',

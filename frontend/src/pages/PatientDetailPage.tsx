@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft, Plus, Mail, Phone, MessageSquare, FileText,
-  CheckCircle, Clock, XCircle, AlertCircle, Send, Trash2, Edit2, X
+  CheckCircle, Clock, XCircle, AlertCircle, Send, Trash2, Edit2, X,
+  Link2, TrendingUp, Copy, Check
 } from 'lucide-react';
 import api from '../lib/api';
 import type { Patient, FamilyMember } from '../types';
+
+const FRONTEND_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'https://www.lineageai.net';
 
 const RELATIONSHIPS = ['parent', 'sibling', 'child', 'aunt', 'uncle', 'cousin', 'grandparent', 'other'];
 
@@ -236,6 +239,11 @@ export default function PatientDetailPage() {
   const [outreachTarget, setOutreachTarget] = useState<FamilyMember | null>(null);
   const [addingMember, setAddingMember] = useState(false);
   const [statusTarget, setStatusTarget] = useState<FamilyMember | null>(null);
+  const [portalUrl, setPortalUrl] = useState('');
+  const [portalCopied, setPortalCopied] = useState(false);
+  const [riskScores, setRiskScores] = useState<(FamilyMember & { riskScore: number })[] | null>(null);
+  const [riskLoading, setRiskLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<'members' | 'risk' | 'portal'>('members');
 
   async function load() {
     try {
@@ -258,6 +266,27 @@ export default function PatientDetailPage() {
     if (!confirm('Remove this family member?')) return;
     await api.delete(`/patients/${patientId}/family/${memberId}`);
     load();
+  }
+
+  async function generatePortalLink() {
+    const res = await api.post(`/patients/${patientId}/portal`);
+    setPortalUrl(res.data.portalUrl);
+  }
+
+  async function copyPortalLink() {
+    await navigator.clipboard.writeText(portalUrl);
+    setPortalCopied(true);
+    setTimeout(() => setPortalCopied(false), 2000);
+  }
+
+  async function loadRiskScores() {
+    setRiskLoading(true);
+    try {
+      const res = await api.get(`/patients/${patientId}/risk-scores`);
+      setRiskScores(res.data);
+    } finally {
+      setRiskLoading(false);
+    }
   }
 
   if (loading) return (
@@ -348,8 +377,31 @@ export default function PatientDetailPage() {
         </div>
       </div>
 
-      {/* Family members */}
+      {/* Tabbed section */}
       <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-6">
+        {/* Tabs */}
+        <div className="flex gap-1 mb-6 bg-gray-100 dark:bg-slate-700 rounded-xl p-1">
+          {([
+            { id: 'members', label: 'At-Risk Relatives', icon: Plus },
+            { id: 'risk', label: 'Priority Outreach', icon: TrendingUp },
+            { id: 'portal', label: 'Family Portal', icon: Link2 },
+          ] as const).map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => { setActiveTab(tab.id); if (tab.id === 'risk' && !riskScores) loadRiskScores(); }}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-medium transition-colors ${
+                activeTab === tab.id
+                  ? 'bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 shadow-sm'
+                  : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200'
+              }`}
+            >
+              <tab.icon className="w-3.5 h-3.5" />{tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Members tab header */}
+        {activeTab === 'members' && (
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="font-semibold text-gray-900 dark:text-slate-100">At-Risk Relatives</h3>
@@ -362,8 +414,111 @@ export default function PatientDetailPage() {
             <Plus className="w-4 h-4" /> Add relative
           </button>
         </div>
+        )}
 
-        {patient.familyMembers.length === 0 ? (
+        {/* Risk Scoring Tab */}
+        {activeTab === 'risk' && (
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="font-semibold text-gray-900 dark:text-slate-100">Priority Outreach Order</h3>
+                <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5">Ranked by age, relationship, and test status</p>
+              </div>
+              <button onClick={loadRiskScores} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Recalculate</button>
+            </div>
+            {riskLoading ? (
+              <div className="flex items-center justify-center h-32">
+                <div className="animate-spin w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full" />
+              </div>
+            ) : riskScores && riskScores.length > 0 ? (
+              <div className="space-y-2">
+                {riskScores.map((m, i) => (
+                  <div key={m.id} className="flex items-center gap-3 p-3 border border-gray-100 dark:border-slate-700 rounded-xl">
+                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0 ${
+                      i === 0 ? 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300'
+                      : i === 1 ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300'
+                      : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-300'
+                    }`}>#{i + 1}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium text-gray-900 dark:text-slate-100">{m.firstName} {m.lastName}</div>
+                      <div className="text-xs text-gray-500 dark:text-slate-400 capitalize">{m.relationship} · {m.testStatus.replace('-', ' ')}</div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-16 h-1.5 bg-gray-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                        <div className={`h-full rounded-full ${m.riskScore >= 70 ? 'bg-red-500' : m.riskScore >= 40 ? 'bg-amber-500' : 'bg-green-500'}`}
+                          style={{ width: `${m.riskScore}%` }} />
+                      </div>
+                      <span className={`text-xs font-bold w-8 text-right ${m.riskScore >= 70 ? 'text-red-600 dark:text-red-400' : m.riskScore >= 40 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
+                        {m.riskScore}
+                      </span>
+                    </div>
+                    <button onClick={() => setOutreachTarget(m as FamilyMember)} className="p-1.5 rounded-lg text-gray-400 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/40 transition-colors">
+                      <Send className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-400 dark:text-slate-500 text-sm">
+                <TrendingUp className="w-8 h-8 mx-auto mb-2 opacity-40" />
+                No family members to score yet.
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Portal Tab */}
+        {activeTab === 'portal' && (
+          <div>
+            <h3 className="font-semibold text-gray-900 dark:text-slate-100 mb-1">Family Sharing Portal</h3>
+            <p className="text-xs text-gray-500 dark:text-slate-400 mb-5">
+              Generate a secure link the proband can share with their family via WhatsApp, iMessage, or email.
+              The portal shows condition info, an AI chatbot, and an opt-out option — no login required.
+            </p>
+            {!portalUrl ? (
+              <button
+                onClick={generatePortalLink}
+                className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+              >
+                <Link2 className="w-4 h-4" /> Generate Family Portal Link
+              </button>
+            ) : (
+              <div className="space-y-4">
+                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />
+                    <span className="text-sm font-medium text-green-800 dark:text-green-300">Portal link generated — valid for 30 days</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <code className="flex-1 text-xs bg-white dark:bg-slate-800 border border-green-200 dark:border-green-800 rounded-lg px-3 py-2 text-gray-700 dark:text-slate-300 truncate">
+                      {portalUrl}
+                    </code>
+                    <button onClick={copyPortalLink} className="flex items-center gap-1.5 bg-green-600 text-white px-3 py-2 rounded-lg text-xs font-medium hover:bg-green-700 transition-colors whitespace-nowrap">
+                      {portalCopied ? <><Check className="w-3.5 h-3.5" /> Copied!</> : <><Copy className="w-3.5 h-3.5" /> Copy</>}
+                    </button>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-3 text-center text-xs">
+                  {[
+                    { label: 'Share via WhatsApp', emoji: '💬', action: () => window.open(`https://wa.me/?text=${encodeURIComponent(`Your family has a hereditary health risk. Learn more and get tested: ${portalUrl}`)}`) },
+                    { label: 'Share via Email', emoji: '📧', action: () => window.open(`mailto:?subject=Important family health information&body=${encodeURIComponent(`A family member has shared important genetic health information with you.\n\nPlease visit: ${portalUrl}`)}`) },
+                    { label: 'Copy Link', emoji: '🔗', action: copyPortalLink },
+                  ].map((btn) => (
+                    <button key={btn.label} onClick={btn.action} className="bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 border border-gray-200 dark:border-slate-600 rounded-xl p-3 transition-colors">
+                      <div className="text-xl mb-1">{btn.emoji}</div>
+                      <div className="text-gray-600 dark:text-slate-300">{btn.label}</div>
+                    </button>
+                  ))}
+                </div>
+                <button onClick={generatePortalLink} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">
+                  Generate new link
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'members' && patient.familyMembers.length === 0 ? (
           <div className="text-center py-10">
             <AlertCircle className="w-8 h-8 text-gray-300 dark:text-slate-600 mx-auto mb-2" />
             <p className="text-sm text-gray-500 dark:text-slate-400 mb-4">No at-risk relatives added yet.</p>
@@ -371,7 +526,7 @@ export default function PatientDetailPage() {
               <Plus className="w-4 h-4" /> Add first relative
             </button>
           </div>
-        ) : (
+        ) : activeTab === 'members' && (
           <div className="space-y-3">
             {patient.familyMembers.map((member) => {
               const statusCfg = STATUS_CONFIG[member.testStatus] ?? STATUS_CONFIG['not-contacted'];

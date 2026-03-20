@@ -12,6 +12,8 @@ import PatientsPage from './pages/PatientsPage';
 import NewPatientPage from './pages/NewPatientPage';
 import PatientDetailPage from './pages/PatientDetailPage';
 import ConditionPage from './pages/ConditionPage';
+import FamilyPortalPage from './pages/FamilyPortalPage';
+import CapacityPage from './pages/CapacityPage';
 import type { User } from './types';
 
 function ProtectedRoute({ user, children }: { user: User | null; children: React.ReactNode }) {
@@ -52,6 +54,7 @@ export default function App() {
           <Route path="/register" element={<RegisterPage onLogin={handleLogin} />} />
           <Route path="/auth/callback" element={<AuthCallbackPage onLogin={handleLogin} />} />
           <Route path="/conditions/:slug" element={<ConditionPage />} />
+          <Route path="/portal/:token" element={<FamilyPortalPage />} />
 
           <Route path="/dashboard" element={
             <ProtectedRoute user={activeUser}>
@@ -78,6 +81,13 @@ export default function App() {
             <ProtectedRoute user={activeUser}>
               <Layout user={activeUser!} onLogout={handleLogout}>
                 <PatientDetailPage />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/capacity" element={
+            <ProtectedRoute user={activeUser}>
+              <Layout user={activeUser!} onLogout={handleLogout}>
+                <CapacityPage />
               </Layout>
             </ProtectedRoute>
           } />

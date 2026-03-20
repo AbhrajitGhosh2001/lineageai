@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Activity, LayoutDashboard, Users, LogOut, Menu, X, Moon, Sun } from 'lucide-react';
+import { Activity, LayoutDashboard, Users, LogOut, Menu, X, Moon, Sun, CalendarClock } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { logout } from '../lib/auth';
@@ -15,6 +15,7 @@ interface Props {
 const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/patients', icon: Users, label: 'Patients' },
+  { to: '/capacity', icon: CalendarClock, label: 'Capacity' },
 ];
 
 export default function Layout({ user, onLogout, children }: Props) {
