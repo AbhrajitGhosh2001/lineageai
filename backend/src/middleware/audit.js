@@ -31,7 +31,9 @@ function auditMiddleware(resource, action) {
     res.json = function (body) {
       if (res.statusCode < 400 && req.user?.userId) {
         const resourceId = req.params?.id || req.params?.patientId || req.params?.memberId || 'list';
-        const patientId = req.params?.patientId || (resource === 'Patient' ? resourceId : null);
+        const rawPatientId = req.params?.patientId || (resource === 'Patient' ? req.params?.id : null);
+        // Only set patientId if it looks like a real cuid (not 'list' or undefined)
+        const patientId = rawPatientId && rawPatientId.length > 10 ? rawPatientId : null;
         audit(
           req.user.userId,
           action,
