@@ -8,7 +8,6 @@ import {
 import api from '../lib/api';
 import type { Patient, FamilyMember } from '../types';
 
-const FRONTEND_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'https://www.lineageai.net';
 
 const RELATIONSHIPS = ['parent', 'sibling', 'child', 'aunt', 'uncle', 'cousin', 'grandparent', 'other'];
 
