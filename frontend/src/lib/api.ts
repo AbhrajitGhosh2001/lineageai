@@ -1,11 +1,7 @@
 import axios from 'axios';
 
-const RAILWAY_URL = 'https://lineageai-copy-production.up.railway.app';
-
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL
-    ? `${import.meta.env.VITE_API_URL}/api`
-    : `${RAILWAY_URL}/api`,
+  baseURL: `${import.meta.env.VITE_API_URL || 'https://lineageai-copy-production.up.railway.app'}/api`,
 });
 
 api.interceptors.request.use((config) => {
