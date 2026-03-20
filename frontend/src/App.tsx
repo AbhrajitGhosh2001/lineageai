@@ -77,7 +77,7 @@ export default function App() {
               </Layout>
             </ProtectedRoute>
           } />
-          <Route path="/patients/:id" element={
+          <Route path="/patients/:patientId" element={
             <ProtectedRoute user={activeUser}>
               <Layout user={activeUser!} onLogout={handleLogout}>
                 <PatientDetailPage />
