@@ -14,6 +14,8 @@ import PatientDetailPage from './pages/PatientDetailPage';
 import ConditionPage from './pages/ConditionPage';
 import FamilyPortalPage from './pages/FamilyPortalPage';
 import CapacityPage from './pages/CapacityPage';
+import TermsPage from './pages/TermsPage';
+import PrivacyPage from './pages/PrivacyPage';
 import type { User } from './types';
 
 function ProtectedRoute({ user, children }: { user: User | null; children: React.ReactNode }) {
@@ -55,6 +57,8 @@ export default function App() {
           <Route path="/auth/callback" element={<AuthCallbackPage onLogin={handleLogin} />} />
           <Route path="/conditions/:slug" element={<ConditionPage />} />
           <Route path="/portal/:token" element={<FamilyPortalPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
 
           <Route path="/dashboard" element={
             <ProtectedRoute user={activeUser}>
