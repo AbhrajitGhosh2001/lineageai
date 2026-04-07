@@ -9,6 +9,7 @@ import {
 } from 'recharts';
 import api from '../lib/api';
 import type { DashboardStats } from '../types';
+import EpicIntegration from '../components/EpicIntegration';
 
 const STATUS_COLORS: Record<string, string> = {
   'not-contacted': '#e5e7eb',
@@ -161,6 +162,11 @@ export default function DashboardPage() {
             </ResponsiveContainer>
           )}
         </div>
+      </div>
+
+      {/* EHR Integration */}
+      <div className="mb-8">
+        <EpicIntegration />
       </div>
 
       {/* Recent outreaches */}

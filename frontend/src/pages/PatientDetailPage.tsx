@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import api from '../lib/api';
 import type { Patient, FamilyMember } from '../types';
+import EpicWriteBack from '../components/EpicWriteBack';
 
 
 const RELATIONSHIPS = ['parent', 'sibling', 'child', 'aunt', 'uncle', 'cousin', 'grandparent', 'other'];
@@ -363,6 +364,14 @@ export default function PatientDetailPage() {
               <p className="text-sm text-gray-700 dark:text-slate-300">{patient.notes}</p>
             </div>
           )}
+          <div className="mt-4 pt-4 border-t border-gray-50 dark:border-slate-700">
+            <EpicWriteBack
+              patientId={patient.id}
+              condition={patient.condition}
+              testResult={patient.testResult}
+              testDate={patient.testDate}
+            />
+          </div>
         </div>
         <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-5 flex flex-col items-center justify-center text-center">
           <div className={`text-4xl font-bold mb-1 ${cascadeRate >= 30 ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>

@@ -4,6 +4,7 @@ const cors = require('cors');
 const passport = require('passport');
 
 const authRoutes = require('./routes/auth');
+const epicRoutes = require('./routes/epic');
 const patientRoutes = require('./routes/patients');
 const familyMemberRoutes = require('./routes/familyMembers');
 const outreachRoutes = require('./routes/outreach');
@@ -37,6 +38,7 @@ app.use(passport.initialize());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/auth/epic', epicRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/patients/:patientId/family', familyMemberRoutes);
 app.use('/api/family/:memberId/outreach', outreachRoutes);
