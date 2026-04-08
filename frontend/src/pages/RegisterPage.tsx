@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Activity } from 'lucide-react';
+import { Activity, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { register } from '../lib/auth';
 import { tw } from '../lib/theme';
@@ -14,6 +14,8 @@ interface Props {
 export default function RegisterPage({ onLogin }: Props) {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', email: '', password: '', clinicName: '' });
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [agreedToDataUse, setAgreedToDataUse] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -24,7 +26,20 @@ export default function RegisterPage({ onLogin }: Props) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
-    if (form.password.length < 8) { setError('Password must be at least 8 characters.'); return; }
+    
+    if (!agreedToTerms) {
+      setError('You must agree to the Terms of Service and Privacy Policy to create an account.');
+      return;
+    }
+    if (!agreedToDataUse) {
+      setError('You must acknowledge how patient data will be handled to use this platform.');
+      return;
+    }
+    if (form.password.length < 8) {
+      setError('Password must be at least 8 characters.');
+      return;
+    }
+    
     setLoading(true);
     try {
       const { token, user } = await register(form);
@@ -113,7 +128,54 @@ export default function RegisterPage({ onLogin }: Props) {
               <input type="password" value={form.password} onChange={(e) => update('password', e.target.value)} required
                 placeholder="Min. 8 characters" className={tw.input} />
             </div>
-            <button type="submit" disabled={loading} className={`w-full ${tw.btnPrimary}`}>
+
+            {/* HIPAA/GINA Compliant Consent Checkboxes */}
+            <div className="space-y-3 pt-2">
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  className="mt-1 w-4 h-4 rounded border-gray-300 dark:border-slate-600 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-0 cursor-pointer"
+                />
+                <span className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+                  I have read and agree to the{' '}
+                  <Link to="/terms" target="_blank" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
+                    Terms of Service
+                  </Link>{' '}
+                  and{' '}
+                  <Link to="/privacy" target="_blank" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
+                    Privacy Policy
+                  </Link>
+                  , including the Notice of Privacy Practices as required under HIPAA.
+                </span>
+              </label>
+
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={agreedToDataUse}
+                  onChange={(e) => setAgreedToDataUse(e.target.checked)}
+                  className="mt-1 w-4 h-4 rounded border-gray-300 dark:border-slate-600 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-0 cursor-pointer"
+                />
+                <span className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+                  I understand that patient genetic data entered into Lineage AI will be handled in accordance with the{' '}
+                  <Link to="/privacy" target="_blank" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
+                    Privacy Policy
+                  </Link>{' '}
+                  and used solely for cascade testing coordination purposes, in compliance with GINA regulations.
+                </span>
+              </label>
+            </div>
+
+            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3 flex gap-2">
+              <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-amber-700 dark:text-amber-300">
+                By creating an account, you confirm you are authorized to access patient health information and will comply with HIPAA, GINA, and applicable state privacy laws.
+              </p>
+            </div>
+
+            <button type="submit" disabled={loading || !agreedToTerms || !agreedToDataUse} className={`w-full ${tw.btnPrimary} disabled:opacity-50 disabled:cursor-not-allowed`}>
               {loading ? 'Creating account…' : 'Create account'}
             </button>
           </form>
@@ -122,6 +184,12 @@ export default function RegisterPage({ onLogin }: Props) {
             Already have an account?{' '}
             <Link to="/login" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">Sign in</Link>
           </p>
+        </div>
+
+        <div className="mt-6 text-center text-xs text-gray-400 dark:text-slate-500">
+          <Link to="/terms" className="hover:text-gray-600 dark:hover:text-slate-300">Terms of Service</Link>
+          <span className="mx-2">·</span>
+          <Link to="/privacy" className="hover:text-gray-600 dark:hover:text-slate-300">Privacy Policy</Link>
         </div>
       </motion.div>
     </div>

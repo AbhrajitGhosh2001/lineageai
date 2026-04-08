@@ -280,6 +280,18 @@ export default function FamilyPortalPage() {
       </div>
 
       <ChatBot condition={data.condition} portalToken={token!} />
+
+      {/* Footer */}
+      <footer className="border-t border-gray-100 py-6 mt-12">
+        <div className="max-w-2xl mx-auto px-4 text-center text-xs text-gray-400">
+          <div className="mb-2">
+            <a href="/terms" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600">Terms of Service</a>
+            <span className="mx-2">·</span>
+            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600">Privacy Policy</a>
+          </div>
+          <p>© 2026 Lineage AI · HIPAA Compliant</p>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -121,6 +121,12 @@ export default function LoginPage({ onLogin }: Props) {
             </Link>
           </p>
         </div>
+
+        <div className="mt-6 text-center text-xs text-gray-400 dark:text-slate-500">
+          <Link to="/terms" className="hover:text-gray-600 dark:hover:text-slate-300">Terms of Service</Link>
+          <span className="mx-2">·</span>
+          <Link to="/privacy" className="hover:text-gray-600 dark:hover:text-slate-300">Privacy Policy</Link>
+        </div>
       </motion.div>
     </div>
   );

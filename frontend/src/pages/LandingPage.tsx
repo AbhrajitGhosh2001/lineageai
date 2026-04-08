@@ -205,20 +205,50 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 dark:border-slate-800 py-8">
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between flex-wrap gap-4 text-sm text-gray-400 dark:text-slate-500">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-indigo-600 rounded flex items-center justify-center">
-              <Activity className="w-3.5 h-3.5 text-white" />
+      <footer className="border-t border-gray-100 dark:border-slate-800 py-10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-6 h-6 bg-indigo-600 rounded flex items-center justify-center">
+                  <Activity className="w-3.5 h-3.5 text-white" />
+                </div>
+                <span className="font-medium text-gray-900 dark:text-slate-100">Lineage AI</span>
+              </div>
+              <p className="text-sm text-gray-500 dark:text-slate-400">
+                Genetic-risk cascade screening platform for full-family testing coordination.
+              </p>
             </div>
-            <span className="font-medium text-gray-600 dark:text-slate-300">Lineage AI</span>
+            <div>
+              <h4 className="font-medium text-gray-900 dark:text-slate-100 mb-3 text-sm">Conditions</h4>
+              <div className="space-y-2 text-sm">
+                <Link to="/conditions/brca1-brca2-hereditary-breast-ovarian-cancer" className="block text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300">BRCA1/2</Link>
+                <Link to="/conditions/lynch-syndrome-hereditary-colorectal-cancer" className="block text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300">Lynch Syndrome</Link>
+                <Link to="/conditions/familial-hypercholesterolemia" className="block text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300">Familial Hypercholesterolemia</Link>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-medium text-gray-900 dark:text-slate-100 mb-3 text-sm">Product</h4>
+              <div className="space-y-2 text-sm">
+                <Link to="/register" className="block text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300">Start Free Pilot</Link>
+                <Link to="/login" className="block text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300">Sign In</Link>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-medium text-gray-900 dark:text-slate-100 mb-3 text-sm">Legal</h4>
+              <div className="space-y-2 text-sm">
+                <Link to="/terms" className="block text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300">Terms of Service</Link>
+                <Link to="/privacy" className="block text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300">Privacy Policy</Link>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-6">
-            <Link to="/conditions/brca1-brca2-hereditary-breast-ovarian-cancer" className="hover:text-gray-600 dark:hover:text-slate-300">BRCA1/2</Link>
-            <Link to="/conditions/lynch-syndrome-hereditary-colorectal-cancer" className="hover:text-gray-600 dark:hover:text-slate-300">Lynch Syndrome</Link>
-            <Link to="/conditions/familial-hypercholesterolemia" className="hover:text-gray-600 dark:hover:text-slate-300">FH</Link>
+          <div className="border-t border-gray-100 dark:border-slate-800 pt-6 flex items-center justify-between flex-wrap gap-4 text-sm text-gray-400 dark:text-slate-500">
+            <div>© 2026 Lineage AI. All rights reserved.</div>
+            <div className="flex items-center gap-1">
+              <Shield className="w-4 h-4" />
+              <span>HIPAA Compliant · SOC 2 Type II</span>
+            </div>
           </div>
-          <div>© 2026 Lineage AI · HIPAA compliant</div>
         </div>
       </footer>
     </div>
