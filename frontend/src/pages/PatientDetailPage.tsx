@@ -366,10 +366,9 @@ export default function PatientDetailPage() {
           )}
           <div className="mt-4 pt-4 border-t border-gray-50 dark:border-slate-700">
             <EpicWriteBack
-              patientId={patient.id}
               condition={patient.condition}
-              testResult={patient.testResult}
-              testDate={patient.testDate}
+              testResult={patient.testResult ?? null}
+              testDate={patient.testDate ?? null}
             />
           </div>
         </div>

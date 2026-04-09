@@ -3,13 +3,12 @@ import { Upload, CheckCircle, XCircle, Loader2 } from 'lucide-react';
 import api from '../lib/api';
 
 interface EpicWriteBackProps {
-  patientId: string;
   condition: string;
-  testResult: string | null;
-  testDate: string | null;
+  testResult?: string | null;
+  testDate?: string | null;
 }
 
-export default function EpicWriteBack({ patientId, condition, testResult, testDate }: EpicWriteBackProps) {
+export default function EpicWriteBack({ condition, testResult, testDate }: EpicWriteBackProps) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [fhirPatientId, setFhirPatientId] = useState('');
